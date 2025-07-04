@@ -27,7 +27,8 @@ jobs:
           # Cek apakah aplikasi sudah ada
           if ! flyctl apps list | grep -q "^$APP_NAME"; then
             echo "Creating Fly app: $APP_NAME"
-            flyctl apps create "$APP_NAME"
+            flyctl apps create "$APP_NAME" --region "$REGION"
+            sleep 5
           else
             echo "App $APP_NAME already exists."
           fi
@@ -35,12 +36,12 @@ jobs:
           # Cek apakah volume sudah ada
           if ! flyctl volumes list --app "$APP_NAME" | grep -q "$VOLUME_NAME"; then
             echo "Creating volume $VOLUME_NAME..."
-            flyctl volumes create "$VOLUME_NAME" --region "$REGION" --size 1 --app "$APP_NAME --yes"
+            flyctl volumes create "$VOLUME_NAME" --region "$REGION" --size 1 --app "$APP_NAME" --yes
           else
             echo "Volume $VOLUME_NAME already exists."
           fi
 
-      - name: Deploy to Fly.io
+      - name: Set Secrets and Deploy
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           APP_BASIC_AUTH: ${{ secrets.APP_BASIC_AUTH }}
