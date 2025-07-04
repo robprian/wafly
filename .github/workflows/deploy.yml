@@ -27,7 +27,7 @@ jobs:
           # Cek apakah aplikasi sudah ada
           if ! flyctl apps list | grep -q "^$APP_NAME"; then
             echo "Creating Fly app: $APP_NAME"
-            flyctl apps create "$APP_NAME" --region "$REGION"
+            flyctl apps create "$APP_NAME"
             sleep 5
           else
             echo "App $APP_NAME already exists."
