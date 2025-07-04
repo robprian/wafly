@@ -22,9 +22,6 @@ primary_region = "sin"
   source = "whatsapp_data"
   destination = "/app/storages"
 
-[deploy]
-  strategy = "rolling"
-
 [[vm]]
   size = "shared-cpu-1x"
   memory = 512
