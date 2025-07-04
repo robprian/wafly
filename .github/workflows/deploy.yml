@@ -1,0 +1,25 @@
+name: Deploy to Fly.io
+
+on:
+  push:
+    branches:
+      - main  # Atur sesuai branch yang ingin kamu pakai
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up Fly.io CLI
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy to Fly.io
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          APP_BASIC_AUTH: ${{ secrets.APP_BASIC_AUTH }}
+        run: |
+          flyctl secrets set APP_BASIC_AUTH="$APP_BASIC_AUTH"
+          flyctl deploy --remote-only
