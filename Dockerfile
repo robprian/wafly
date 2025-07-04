@@ -1,6 +1,9 @@
 FROM aldinokemal2104/go-whatsapp-web-multidevice
 
-# Port WA Gateway
-EXPOSE 3000
+# Default port
+ENV APP_PORT=3000
 
+EXPOSE ${APP_PORT}
+
+# Jalankan binary utama
 CMD ["./go-whatsapp-web-multidevice"]
